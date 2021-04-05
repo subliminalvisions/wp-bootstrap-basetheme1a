@@ -1,5 +1,34 @@
 <?php
 
+    
+if ( ! function_exists( 'bootbase_theme_setup' ) ) {
+	/**
+	 * Sets up theme defaults and registers support for various WordPress features.
+	 *
+	 * This function is hooked into the after_setup_theme hook, which
+	 * runs before the init hook. The init hook is too late for some features, such
+	 * as indicating support for post thumbnails.
+	 */
+	function bootbase_theme_setup() {
+
+		/* set the maximum allowed width for any content in the theme
+        * @see http://codex.wordpress.org/Content_Width */
+		if ( ! isset( $content_width ) ) {
+			$content_width = 1140;
+		}
+    
+		/** Add New Sidebars*/
+		require get_template_directory() . '/sidebars/sidebars.php';
+
+        /** Widgets */
+		require get_template_directory() . '/widgets/class-bootbase-widget-about.php';
+		require get_template_directory() . '/widgets/class-bootbase-widget-latest-posts.php';
+
+    } // function bootbase_theme_setup
+	add_action( 'after_setup_theme', 'bootbase_theme_setup', 9 );
+} // End if().
+
+
 function bootstrapstarter_enqueue_styles() {
     wp_register_style('bootstrap', get_template_directory_uri() . '/bootstrap/css/bootstrap.min.css' );
     $dependencies = array('bootstrap');
